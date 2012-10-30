@@ -39,21 +39,21 @@ build: version.txt doxy
 	cp -r doc/html ${DISTDIR}/doc
 	-mkdir ${DISTDIR}/src
 	cp ${SRCS} ${DISTDIR}/src
-	ssh Axe      'cd                      src/SJtest; ./build.sh ${DISTDIR}'
-	ssh Day      'cd                      src/SJtest; ./build.sh ${DISTDIR}'
-	ssh OldHat   'cd                      src/SJtest; ./build.sh ${DISTDIR}'
-	ssh Ra       'cd                      src/SJtest; ./build.sh ${DISTDIR}'
-	ssh Raze     'cd                      src/SJtest; ./build.sh ${DISTDIR}'
-	ssh Wormwood 'cd /29W/Day/d0/home/bob/src/SJtest; ./build.sh ${DISTDIR}'
-#	ssh localhost 'cd uni/INFA/SJtest; ./build.sh ${DISTDIR}'
+	ssh Axe       'cd                      src/SJtest; ./build.sh ${DISTDIR}'
+	ssh Day       'cd                      src/SJtest; ./build.sh ${DISTDIR}'
+	ssh OldHat    'cd                      src/SJtest; ./build.sh ${DISTDIR}'
+	ssh Ra        'cd                      src/SJtest; ./build.sh ${DISTDIR}'
+	ssh Raze      'cd                      src/SJtest; ./build.sh ${DISTDIR}'
+	ssh Wormwood  'cd /29W/Day/d0/home/bob/src/SJtest; ./build.sh ${DISTDIR}'
+#	ssh localhost 'cd                      src/SJtest; ./build.sh ${DISTDIR}'
 
 # Documentation
 doxy: version.txt
-	sed -i'' -e "/PROJECT_NUMBER/s/=.*/= ${VERS}/" Doxyfile
+	sed -i .bak -e "/PROJECT_NUMBER/s/=.*/= ${VERS}/" Doxyfile
 	doxygen
 
 clean:
-	rm -r -f core *.o sjtest
+	rm -r -f core *.o sjtest Doxyfile.bak
 
 clobber: clean
 	rm -r -f version.txt SJtest-* doc/html

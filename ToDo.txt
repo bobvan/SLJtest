@@ -54,3 +54,6 @@ Done
 	Fix usage of "benchmark" to "test"
 	Document everything in source code.
 	Add <tt> and </tt> around in-line option references.
+	Set up a distribution directory containing version number for archive root.
+	Fix Makefile for portable sed -i and clean up resulting Doxygen.bak.
+	Allow limited packaging testing when no build hosts available.

@@ -10,3 +10,4 @@ sjtest
 sjtest.o
 getopt.o
 version.txt
+Doxyfile.bak
