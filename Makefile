@@ -33,9 +33,10 @@ version.txt: sjtest.c
 package: build version.txt
 	tar cvzf ${DISTDIR}.tgz ${DISTDIR}
 
-build: version.txt
+build: version.txt doxy
 	-mkdir ${DISTDIR}
 	cp doc/ReadMe.txt ${DISTDIR}
+	cp -r doc/html ${DISTDIR}/doc
 	-mkdir ${DISTDIR}/src
 	cp ${SRCS} ${DISTDIR}/src
 	ssh Axe      'cd                      src/SJtest; ./build.sh ${DISTDIR}'
@@ -48,7 +49,7 @@ build: version.txt
 
 # Documentation
 doxy: version.txt
-	sed -i '' -e "/PROJECT_NUMBER/s/=.*/= ${VERS}/" Doxyfile
+	sed -i'' -e "/PROJECT_NUMBER/s/=.*/= ${VERS}/" Doxyfile
 	doxygen
 
 clean:
