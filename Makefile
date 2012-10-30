@@ -5,16 +5,17 @@
 # Build.sh has the benefit that it auotmatically sets platform-specific
 # compile and link options.
 #
-VERS=`sed -n '/char.*version.*SJ Test/s/.*\([0-9]\.[0-9][0-9]*[a-z]*[0-9]*\).*/\1/p' sjtest.c`
+
+# Any rule referncing these variable shoud depend on version.txt
+VERS=`cat version.txt`
 DISTDIR=SJtest-${VERS}
 
 CFLAGS=-g -Wall
-SRCS=	sjtest.c getopt.c replgetopt.h \
-	Makefile build.sh
+SRCS=	Makefile sjtest.c getopt.c replgetopt.h
+	
 BINDIRS=Linux-glibc:2.3-x86_64 Linux-glibc:2.5-x86_64 \
 	Linux-glibc:2.3-i386 Darwin-9.8.0-i386 \
 	SunOS-5.10-i86pc FreeBSD-6.3-RELEASE-p12-i386
-SCP_HOST=Ra
 
 all: sjtest
 
@@ -24,30 +25,29 @@ sjtest: getopt.o sjtest.o
 sjtest.o: replgetopt.h sjtest.c
 	${CC} ${CFLAGS}   -c -o sjtest.o sjtest.c
 
-scp:
-	scp ${SRCS} ${SCP_HOST}:tmp/sjtest
-
-package: build
+version.txt: sjtest.c
+	sed -n '/char.*version.*SJ Test/s/.*\([0-9]\.[0-9][0-9]*[a-z]*[0-9]*\).*/\1/p' sjtest.c > version.txt
 	@echo "A failure at this point means the version string extraction is broken"
-	@test -n "${VERS}"
+	@test -s version.txt
+
+package: build version.txt
 	tar cvzf ${DISTDIR}.tgz ${DISTDIR}
 
-build:
+build: version.txt
+	-mkdir ${DISTDIR}
 	cp doc/ReadMe.txt ${DISTDIR}
-	mkdir -p ${DISTDIR}/src
+	-mkdir ${DISTDIR}/src
 	cp ${SRCS} ${DISTDIR}/src
-	ssh Axe      'cd                      tmp/SJtest; ./build.sh ${VERS}'
-	ssh Day      'cd                      tmp/SJtest; ./build.sh ${VERS}'
-	ssh OldHat   'cd                      tmp/SJtest; ./build.sh ${VERS}'
-	ssh Ra       'cd                      tmp/SJtest; ./build.sh ${VERS}'
-	ssh Raze     'cd                      tmp/SJtest; ./build.sh ${VERS}'
-	ssh Wormwood 'cd /29W/Day/d0/home/bob/tmp/SJtest; ./build.sh ${VERS}'
-#	ssh localhost 'cd uni/INFA/SJtest; ./build.sh ${VERS}'
+	ssh Axe      'cd                      src/SJtest; ./build.sh ${DISTDIR}'
+	ssh Day      'cd                      src/SJtest; ./build.sh ${DISTDIR}'
+	ssh OldHat   'cd                      src/SJtest; ./build.sh ${DISTDIR}'
+	ssh Ra       'cd                      src/SJtest; ./build.sh ${DISTDIR}'
+	ssh Raze     'cd                      src/SJtest; ./build.sh ${DISTDIR}'
+	ssh Wormwood 'cd /29W/Day/d0/home/bob/src/SJtest; ./build.sh ${DISTDIR}'
+#	ssh localhost 'cd uni/INFA/SJtest; ./build.sh ${DISTDIR}'
 
 # Documentation
-doxy:
-	@echo "A failure at this point means the version string extraction is broken"
-	@test -n "${VERS}"
+doxy: version.txt
 	sed -i '' -e "/PROJECT_NUMBER/s/=.*/= ${VERS}/" Doxyfile
 	doxygen
 
@@ -55,4 +55,4 @@ clean:
 	rm -r -f core *.o sjtest
 
 clobber: clean
-	rm -r -f SJtest-* doc/html
+	rm -r -f version.txt SJtest-* doc/html

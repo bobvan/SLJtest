@@ -19,6 +19,7 @@ To Do in LA
 	Google for Wikipedia reference to TSC.
 
 To Do Soon
+	Decide if there should be a separate Makefile for develpment and distribution
 	First guess at development and distribution tree layouts
 	Add doc section on optimal knee settings and advice auto printed.
 	Add doc section describing a block of timestamps and loop unrolling.
