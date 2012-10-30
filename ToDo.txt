@@ -1,4 +1,5 @@
 To Do Now
+	Test to see if doc paths break when src is moved. Maybe src at root?
 	Document build procedures for distribution and for end user
 	Turn on source cross reference.
 	Make plans for distributing PDF doc. (Maybe this argues against a separate intro page?)
@@ -12,7 +13,6 @@ To Do Now
 
 To Do in LA
 	Google for sjtest before finalizing name
-	Google for a jitter font and prototype a project logo
 	Does Doxygen support copyright? License? Disclaimers? Acknowledgements?
 	Research how to do code examples in Doxygen
 	Research how to do output examples in Doxygen
@@ -28,7 +28,6 @@ To Do Soon
 	Send a snapshot to David Riddoch for comment
 	Maybe include some outlier plots in the doc?
 	Cite example of BIOS PS/2 emulation causing jitter.
-	Add a logo to Doxyfile
 	Finalize development and distribution tree layouts
 	Create git repository and commit initial versions
 	Maybe get Pete to do a quick doc review?
@@ -57,3 +56,5 @@ Done
 	Set up a distribution directory containing version number for archive root.
 	Fix Makefile for portable sed -i and clean up resulting Doxygen.bak.
 	Allow limited packaging testing when no build hosts available.
+	Google for a jitter font and prototype a project logo
+	Add a logo to Doxyfile
