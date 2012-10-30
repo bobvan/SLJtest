@@ -1,0 +1,10 @@
+.*.swp
+*/.*.swp
+.DS_Store
+doc/latex
+doc/html
+SJtest-*
+*.tgz
+*.zip
+sjtest
+sjtest.o
