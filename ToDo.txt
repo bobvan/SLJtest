@@ -1,25 +1,14 @@
 To Do Now
-	Test to see if doc paths break when src is moved. Maybe src at root?
-	Document build procedures for distribution and for end user
-	Turn on source cross reference.
-	Make plans for distributing PDF doc. (Maybe this argues against a separate intro page?)
-	Is there any good place to use tables in doc?
-	Insert jitter by layer graphic from Keynote into doc.
-	Should I create a manpage with Doxygen and move command line options to it?
-	Make uses of <tt> wrap lines properly
-	Find Dave's comments and incorporate his suggested fixes.
-	Incorporate sample output in doc.
-	Maybe use sample output from Keynote file?
-
-To Do in LA
-	Google for sjtest before finalizing name
-	Does Doxygen support copyright? License? Disclaimers? Acknowledgements?
-	Research how to do code examples in Doxygen
-	Research how to do output examples in Doxygen
-	Google for Wikipedia reference to TSC.
+	Test Makefile.dist on all platforms
 
 To Do Soon
+	Turn on source cross reference.
+	Should I create a manpage with Doxygen and move command line options to it?
+	Maybe use a table for sample bin values? Maybe with only upper bound?
+	Get better data for outliers plot and shoot smaller image
+	Crop top and bottom pixels out of output explanation figure.
 	Decide if there should be a separate Makefile for develpment and distribution
+	Insert a graph of cumulative percentage showing knee
 	First guess at development and distribution tree layouts
 	Add doc section on optimal knee settings and advice auto printed.
 	Add doc section describing a block of timestamps and loop unrolling.
@@ -34,10 +23,11 @@ To Do Soon
 	Check code with valgrind
 	Solicit comments from Steve Ford
 	Review files from concentration directory that should come over
-	Spell check and read aloud
+	Add assertion checking for negative TSC delta indicating core switch
 
 To Do Someday
 	A Windows port?
+	Collect more example output showing suggested contrasts
 
 Done
 	Pull existing ReadMe.txt into rough cut of Doxygen documentation
@@ -58,3 +48,24 @@ Done
 	Allow limited packaging testing when no build hosts available.
 	Google for a jitter font and prototype a project logo
 	Add a logo to Doxyfile
+
+	Checkpoint before 0.8b release.  For testing in lab.
+	Massive changes to doc. Major rewrite.
+	Test to see if doc paths break when src is moved. Maybe src at root?
+	Maybe use sample output from Keynote file?
+	Add image showing no periodic jitter
+	Make plans for distributing PDF doc. (Maybe this argues against a separate intro page?)
+	Turned separate overview doc into mainpage doc.
+	Use \verbatim for sample output
+	Incorporate sample output in doc.
+	Create a Makefile.dist
+	Is there any good place to use tables in doc?
+	Insert jitter by layer graphic from Keynote into doc.
+	Spell check doc and read aloud
+	Add section showing output suggesting better knee and min values.
+	Find Dave's comments and incorporate his suggested fixes.
+	Google for sjtest before finalizing name
+	Research how to do code examples in Doxygen
+	Research how to do output examples in Doxygen
+	Google for Wikipedia reference to TSC.
+	Does Doxygen support copyright? License? Disclaimers? Acknowledgements?

@@ -14,7 +14,7 @@
 	<key>BackgroundGraphic</key>
 	<dict>
 		<key>Bounds</key>
-		<string>{{0, 0}, {576.00002479553223, 733}}</string>
+		<string>{{0, 0}, {576, 733}}</string>
 		<key>Class</key>
 		<string>SolidGraphic</string>
 		<key>ID</key>
@@ -211,7 +211,7 @@ SJ Test}</string>
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2012-10-30 14:25:09 +0000</string>
+	<string>2012-10-31 14:22:13 +0000</string>
 	<key>Modifier</key>
 	<string>Bob Van Valzah</string>
 	<key>NotesVisible</key>
@@ -242,7 +242,7 @@ SJ Test}</string>
 		<key>NSPaperSize</key>
 		<array>
 			<string>size</string>
-			<string>{612.00002479553223, 792}</string>
+			<string>{612, 792}</string>
 		</array>
 		<key>NSPrintReverseOrientation</key>
 		<array>
@@ -306,7 +306,7 @@ SJ Test}</string>
 		<key>SidebarWidth</key>
 		<integer>120</integer>
 		<key>VisibleRegion</key>
-		<string>{{76.25, 85.5}, {247, 199}}</string>
+		<string>{{76, 85.5}, {247, 199}}</string>
 		<key>Zoom</key>
 		<real>4</real>
 		<key>ZoomValues</key>

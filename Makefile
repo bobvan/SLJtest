@@ -1,9 +1,8 @@
 #
-# There are two different ways binaries get built
-# 1) Use Makefile to build binaries in this directory
-# 2) Use build.sh to build binaries in platform-appropriate sub directory
-# Build.sh has the benefit that it auotmatically sets platform-specific
-# compile and link options.
+# This is the Makefile for development of SJ Test.
+# The Makefile that gets distributed is Makefile.dist.
+#
+# Also see build.sh for platform-specific options.
 #
 
 # Any rule referncing these variable shoud depend on version.txt
@@ -11,7 +10,7 @@ VERS=`cat version.txt`
 DISTDIR=SJtest-${VERS}
 
 CFLAGS=-g -Wall
-SRCS=	Makefile sjtest.c getopt.c replgetopt.h
+SRCS=	sjtest.c getopt.c replgetopt.h
 	
 BINDIRS=Linux-glibc:2.3-x86_64 Linux-glibc:2.5-x86_64 \
 	Linux-glibc:2.3-i386 Darwin-9.8.0-i386 \
@@ -39,6 +38,7 @@ build: version.txt doxy
 	cp -r doc/html ${DISTDIR}/doc
 	-mkdir ${DISTDIR}/src
 	cp ${SRCS} ${DISTDIR}/src
+	cp Makefile.dist ${DISTDIR}/src/Makefile
 	ssh Axe       'cd                      src/SJtest; ./build.sh ${DISTDIR}'
 	ssh Day       'cd                      src/SJtest; ./build.sh ${DISTDIR}'
 	ssh OldHat    'cd                      src/SJtest; ./build.sh ${DISTDIR}'
