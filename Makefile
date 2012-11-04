@@ -36,6 +36,7 @@ build: version.txt doxy
 	-mkdir ${DISTDIR}
 	cp doc/ReadMe.txt ${DISTDIR}
 	cp -r doc/html ${DISTDIR}/doc
+	cp    doc/sjtest.pdf ${DISTDIR}/doc
 	-mkdir ${DISTDIR}/src
 	cp ${SRCS} ${DISTDIR}/src
 	cp Makefile.dist ${DISTDIR}/src/Makefile
@@ -49,7 +50,7 @@ build: version.txt doxy
 
 # Documentation
 doxy: version.txt
-	sed -i .bak -e "/PROJECT_NUMBER/s/=.*/= ${VERS}/" Doxyfile
+	sed -i.bak -e "/PROJECT_NUMBER/s/=.*/= ${VERS}/" Doxyfile
 	doxygen
 
 clean:

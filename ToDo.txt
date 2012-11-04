@@ -1,5 +1,4 @@
 To Do Now
-	Test Makefile.dist on all platforms
 
 To Do Soon
 	Turn on source cross reference.
@@ -69,3 +68,8 @@ Done
 	Research how to do output examples in Doxygen
 	Google for Wikipedia reference to TSC.
 	Does Doxygen support copyright? License? Disclaimers? Acknowledgements?
+
+	Write a ReadMe.txt.
+	Added doc/sjtest.pdf.
+	Test Makefile.dist on all platforms
+	Fix a sed portability bug in Makefile
