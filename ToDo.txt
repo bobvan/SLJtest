@@ -76,3 +76,5 @@ Done
 
 	Tweaks for building on Windows with MinGW and packaging in ZIP
 	Added build.txt with building instructions.
+
+	Final tweaks before 0.8b release.
