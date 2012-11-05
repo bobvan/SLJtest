@@ -73,3 +73,6 @@ Done
 	Added doc/sjtest.pdf.
 	Test Makefile.dist on all platforms
 	Fix a sed portability bug in Makefile
+
+	Tweaks for building on Windows with MinGW and packaging in ZIP
+	Added build.txt with building instructions.

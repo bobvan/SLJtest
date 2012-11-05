@@ -83,7 +83,12 @@
 #include <math.h>
 #include <sys/time.h>
 
+#ifdef _WIN32
+#include <windows.h>
+#include "getopt.h"
+#else /* _WIN32 */
 #include "replgetopt.h"
+#endif /* _WIN32 */
 
 #ifdef	CPU_AFFINITY
 #define	__USE_GNU

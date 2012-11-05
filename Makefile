@@ -24,15 +24,20 @@ sjtest: getopt.o sjtest.o
 sjtest.o: replgetopt.h sjtest.c
 	${CC} ${CFLAGS}   -c -o sjtest.o sjtest.c
 
+sjtest.exe: sjtest.o
+	${CC} ${LDLAGS} -o $@ -lm sjtest.o
+
 version.txt: sjtest.c
 	sed -n '/char.*version.*SJ Test/s/.*\([0-9]\.[0-9][0-9]*[a-z]*[0-9]*\).*/\1/p' sjtest.c > version.txt
 	@echo "A failure at this point means the version string extraction is broken"
 	@test -s version.txt
 
-package: build version.txt
+package: version.txt
 	tar cvzf ${DISTDIR}.tgz ${DISTDIR}
+	-rm -f ${DISTDIR}.zip
+	zip -r ${DISTDIR}.zip ${DISTDIR}
 
-build: version.txt doxy
+build: version.txt
 	-mkdir ${DISTDIR}
 	cp doc/ReadMe.txt ${DISTDIR}
 	cp -r doc/html ${DISTDIR}/doc

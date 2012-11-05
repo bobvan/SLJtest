@@ -1,0 +1,26 @@
+Build Requirements
+	Doc build machine
+		Modern Doxygen version
+			1.4.7 is too old
+			1.8.1.2 is new enough
+	Unix build machine
+	Windows build machine
+
+Build Procedure
+	Bump version
+	Commit to repository, tag, etc.
+	Check out on all build systems
+	Doc build machine
+		make clobber # just for good measure
+		make doxy
+		Open doc/hmtl/index.html in browser
+		Print to sjtest.pdf
+		Copy doc to Unix build machine
+	Unix build machine
+		make build
+		Type passwords as needed
+	Windows build machine
+		make sjtest.exe
+		Copy binary back to Unix build machine if needed
+	Unix build machine
+		make package
