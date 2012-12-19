@@ -237,7 +237,7 @@ const char *usage = "[-b bins] [-f file] [-h] [-k knee] [-m min] [-o outbuf] [-p
 #endif	/* CPU_AFFINITY */
 
 /*! Note that Makefile parses the following line to extract version number */
-const char *version = "SJ Test 0.8b";
+const char *version = "SJ Test 0.8c";
 
 /*! Histogram table of timestamp deltas */
 bin_t *histo;
@@ -609,7 +609,7 @@ main(int argc, char *argv[]) {
 	uint64_t mid_count = 0;	/* Cumulative count at histogram midpoint */
 	for (bp=histo; bp<histo+args.bins; bp++) {
 		/*
-		 * If at midpoint in histogram, record count_sum for
+		 * If at midpoint in histogram, record c_count for
 		 * knee tuning advice later.
 		 */
 		if (bp == histo+(args.bins/2))
@@ -705,6 +705,7 @@ main(int argc, char *argv[]) {
 \section impatient For the Impatient
 
 \li Run a pre-compiled binary:<tt> bin/\<Platform\>/sjtest</tt>
+\li On Windows, open a <tt>cmd</tt> window and run <tt>sjtext.exe</tt> in that.
 \li Or build from source and run:<tt> cd src; make; ./sjtest</tt>
 \li The output should be pretty self explanatory.
 \li Put your right ear on your shoulder to see the histogram.

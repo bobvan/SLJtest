@@ -6,10 +6,8 @@ To Do Soon
 	Maybe use a table for sample bin values? Maybe with only upper bound?
 	Get better data for outliers plot and shoot smaller image
 	Crop top and bottom pixels out of output explanation figure.
-	Decide if there should be a separate Makefile for develpment and distribution
 	Insert a graph of cumulative percentage showing knee
 	First guess at development and distribution tree layouts
-	Add doc section on optimal knee settings and advice auto printed.
 	Add doc section describing a block of timestamps and loop unrolling.
 	Create a new ReadMe.txt
 	Add output examples and tell SJ stories
@@ -23,10 +21,11 @@ To Do Soon
 	Solicit comments from Steve Ford
 	Review files from concentration directory that should come over
 	Add assertion checking for negative TSC delta indicating core switch
+	Remove beta warning
 
 To Do Someday
-	A Windows port?
 	Collect more example output showing suggested contrasts
+		Sprint vs. Marathon
 
 Done
 	Pull existing ReadMe.txt into rough cut of Doxygen documentation
@@ -67,6 +66,7 @@ Done
 	Research how to do code examples in Doxygen
 	Research how to do output examples in Doxygen
 	Google for Wikipedia reference to TSC.
+	Decide if there should be a separate Makefile for develpment and distribution
 	Does Doxygen support copyright? License? Disclaimers? Acknowledgements?
 
 	Write a ReadMe.txt.
@@ -75,6 +75,8 @@ Done
 	Fix a sed portability bug in Makefile
 
 	Tweaks for building on Windows with MinGW and packaging in ZIP
+	A Windows port
+	Add doc section on optimal knee settings and advice auto printed.
 	Added build.txt with building instructions.
 
 	Final tweaks before 0.8b release.
