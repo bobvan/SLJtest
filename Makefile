@@ -1,5 +1,5 @@
 #
-# This is the Makefile for development of SJ Test.
+# This is the Makefile for development of SLJ Test.
 # The Makefile that gets distributed is Makefile.dist.
 #
 # Also see build.sh for platform-specific options.
@@ -7,28 +7,28 @@
 
 # Any rule referncing these variable shoud depend on version.txt
 VERS=`cat version.txt`
-DISTDIR=SJtest-${VERS}
+DISTDIR=SLJtest-${VERS}
 
 CFLAGS=-g -Wall
-SRCS=	sjtest.c getopt.c replgetopt.h
+SRCS=	sljtest.c getopt.c replgetopt.h
 	
 BINDIRS=Linux-glibc:2.3-x86_64 Linux-glibc:2.5-x86_64 \
 	Linux-glibc:2.3-i386 Darwin-9.8.0-i386 \
 	SunOS-5.10-i86pc FreeBSD-6.3-RELEASE-p12-i386
 
-all: sjtest
+all: sljtest
 
-sjtest: getopt.o sjtest.o
-	${CC} ${LDLAGS} -o $@ -lm getopt.o sjtest.o
+sljtest: getopt.o sljtest.o
+	${CC} ${LDLAGS} -o $@ -lm getopt.o sljtest.o
 
-sjtest.o: replgetopt.h sjtest.c
-	${CC} ${CFLAGS}   -c -o sjtest.o sjtest.c
+sljtest.o: replgetopt.h sljtest.c
+	${CC} ${CFLAGS}   -c -o sljtest.o sljtest.c
 
-sjtest.exe: sjtest.o
-	${CC} ${LDLAGS} -o $@ -lm sjtest.o
+sljtest.exe: sljtest.o
+	${CC} ${LDLAGS} -o $@ -lm sljtest.o
 
-version.txt: sjtest.c
-	sed -n '/char.*version.*SJ Test/s/.*\([0-9]\.[0-9][0-9]*[a-z]*[0-9]*\).*/\1/p' sjtest.c > version.txt
+version.txt: sljtest.c
+	sed -n '/char.*version.*SLJ Test/s/.*\([0-9]\.[0-9][0-9]*[a-z]*[0-9]*\).*/\1/p' sljtest.c > version.txt
 	@echo "A failure at this point means the version string extraction is broken"
 	@test -s version.txt
 
@@ -41,18 +41,18 @@ build: version.txt
 	-mkdir ${DISTDIR}
 	cp doc/ReadMe.txt ${DISTDIR}
 	cp -r doc/html ${DISTDIR}/doc
-	cp    doc/sjtest.pdf ${DISTDIR}/doc
+	cp    doc/sljtest.pdf ${DISTDIR}/doc
 	-mkdir ${DISTDIR}/src
 	cp ${SRCS} ${DISTDIR}/src
 	cp Makefile.dist ${DISTDIR}/src/Makefile
-	ssh Axe       'cd                      src/SJtest; ./build.sh ${DISTDIR}'
-	ssh Day       'cd                      src/SJtest; ./build.sh ${DISTDIR}'
-	ssh OldHat    'cd                      src/SJtest; ./build.sh ${DISTDIR}'
-	ssh Ra        'cd                      src/SJtest; ./build.sh ${DISTDIR}'
-	ssh Raze      'cd                      src/SJtest; ./build.sh ${DISTDIR}'
-	ssh Wormwood  'cd /29W/Day/d0/home/bob/src/SJtest; ./build.sh ${DISTDIR}'
-	mkdir ${DISTDIR}bin/Windows # Placeholder for sjtest.exe to be copied in
-#	ssh localhost 'cd                      src/SJtest; ./build.sh ${DISTDIR}'
+	ssh Axe       'cd                      src/SLJtest; ./build.sh ${DISTDIR}'
+	ssh Day       'cd                      src/SLJtest; ./build.sh ${DISTDIR}'
+	ssh OldHat    'cd                      src/SLJtest; ./build.sh ${DISTDIR}'
+	ssh Ra        'cd                      src/SLJtest; ./build.sh ${DISTDIR}'
+	ssh Raze      'cd                      src/SLJtest; ./build.sh ${DISTDIR}'
+	ssh Wormwood  'cd /29W/Day/d0/home/bob/src/SLJtest; ./build.sh ${DISTDIR}'
+	mkdir ${DISTDIR}bin/Windows # Placeholder for sljtest.exe to be copied in
+#	ssh localhost 'cd                      src/SLJtest; ./build.sh ${DISTDIR}'
 
 # Documentation
 doxy: version.txt
@@ -60,7 +60,7 @@ doxy: version.txt
 	doxygen
 
 clean:
-	rm -r -f core *.o sjtest Doxyfile.bak
+	rm -r -f core *.o sljtest Doxyfile.bak
 
 clobber: clean
-	rm -r -f version.txt SJtest-* doc/html
+	rm -r -f version.txt SLJtest-* doc/html

@@ -48,4 +48,4 @@ set -x
 
 cd $BINDIR
 
-cc $CFLAGS $LDFLAGS -o sjtest ../../../getopt.c ../../../sjtest.c
+cc $CFLAGS $LDFLAGS -o sljtest ../../../getopt.c ../../../sljtest.c

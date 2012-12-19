@@ -15,14 +15,14 @@ Build Procedure
 		make doxy
 		Visually check for errors in doxygen console output
 		Open doc/hmtl/index.html in browser
-		Print to sjtest.pdf
+		Print to sljtest.pdf
 		Copy doc to Unix build machine
 	Unix build machine
 		make build
 		Type passwords as needed
 	Windows build machine
-		cd c:\MinGW\msys\1.0\home\bvvalzah\src\SJtest
-		make sjtest.exe
+		cd c:\MinGW\msys\1.0\home\bvvalzah\src\SLJtest
+		make sljtest.exe
 		Copy binary back to Unix build machine if needed
 	Unix build machine
 		make package

@@ -1,12 +1,12 @@
 
 CFLAGS=-g -Wall
-SRCS=	Makefile sjtest.c getopt.c replgetopt.h
+SRCS=	Makefile sljtest.c getopt.c replgetopt.h
 	
-sjtest: getopt.o sjtest.o
-	${CC} ${LDLAGS} -o $@ -lm getopt.o sjtest.o
+sljtest: getopt.o sljtest.o
+	${CC} ${LDLAGS} -o $@ -lm getopt.o sljtest.o
 
-sjtest.o: replgetopt.h sjtest.c
-	${CC} ${CFLAGS}   -c -o sjtest.o sjtest.c
+sljtest.o: replgetopt.h sljtest.c
+	${CC} ${CFLAGS}   -c -o sljtest.o sljtest.c
 
 clean:
-	rm -r -f *.o sjtest
+	rm -r -f *.o sljtest

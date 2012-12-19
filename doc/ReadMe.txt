@@ -1,18 +1,18 @@
-SJ Test: System Jitter Test
+SLJ Test: System Jitter Test
 
 It's best to start by using a browser to open doc/html/index.html
-If that's hard, you can try printing doc/sjtest.pdf
+If that's hard, you can try printing doc/sljtest.pdf
 
 For the Impatient
 
- Run a pre-compiled binary: bin/<Platform>/sjtest
- Or build from source and run: cd src; make; ./sjtest
+ Run a pre-compiled binary: bin/<Platform>/sljtest
+ Or build from source and run: cd src; make; ./sljtest
  The output should be pretty self explanatory.
  Put your right ear on your shoulder to see the histogram.
  See "Output Explanation" in the doc for details.
  See "Command Line Options" in the doc for fine tuning and features.
  See "Example Output" in the doc for example output and analysis.
- See the code by using a browser to visit doc/html/globals.html or see src/sjtest.c
+ See the code by using a browser to visit doc/html/globals.html or see src/sljtest.c
 
 (c) Copyright 2011, 2012 Informatica Corp.
 

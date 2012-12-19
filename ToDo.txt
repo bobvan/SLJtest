@@ -7,27 +7,24 @@ To Do Soon
 	Get better data for outliers plot and shoot smaller image
 	Crop top and bottom pixels out of output explanation figure.
 	Insert a graph of cumulative percentage showing knee
-	First guess at development and distribution tree layouts
-	Add doc section describing a block of timestamps and loop unrolling.
 	Create a new ReadMe.txt
-	Add output examples and tell SJ stories
-	Send a snapshot to David Riddoch for comment
+	Add output examples and tell SLJ stories
 	Maybe include some outlier plots in the doc?
 	Cite example of BIOS PS/2 emulation causing jitter.
-	Finalize development and distribution tree layouts
-	Create git repository and commit initial versions
 	Maybe get Pete to do a quick doc review?
 	Check code with valgrind
 	Solicit comments from Steve Ford
 	Review files from concentration directory that should come over
 	Add assertion checking for negative TSC delta indicating core switch
 	Remove beta warning
+	Add optional weighting for percent and cumulative percent
 
 To Do Someday
 	Collect more example output showing suggested contrasts
 		Sprint vs. Marathon
 
 Done
+	Create git repository and commit initial versions
 	Pull existing ReadMe.txt into rough cut of Doxygen documentation
 	Aggregate doc content from Pages
 	Figure out why doxygen can't be run from Makefile
@@ -35,7 +32,7 @@ Done
 	Bring over version extraction code from UMERA
 	Check for warnings in Doxygen output logs.
 	Add Doxygen headers to getopt files.
-	Fix references to "concentration" in source sjtest.c
+	Fix references to "concentration" in source sljtest.c
 	Fix usage of "low-level" jitter to "system" jitter
 	Fix usage of "high-level" jitter to application jitter
 	Fix usage of "benchmark" to "test"
@@ -62,7 +59,7 @@ Done
 	Spell check doc and read aloud
 	Add section showing output suggesting better knee and min values.
 	Find Dave's comments and incorporate his suggested fixes.
-	Google for sjtest before finalizing name
+	Google for sljtest before finalizing name
 	Research how to do code examples in Doxygen
 	Research how to do output examples in Doxygen
 	Google for Wikipedia reference to TSC.
@@ -70,9 +67,12 @@ Done
 	Does Doxygen support copyright? License? Disclaimers? Acknowledgements?
 
 	Write a ReadMe.txt.
-	Added doc/sjtest.pdf.
+	Added doc/sljtest.pdf.
 	Test Makefile.dist on all platforms
 	Fix a sed portability bug in Makefile
+	Add doc section describing a block of timestamps and loop unrolling.
+	First guess at development and distribution tree layouts
+	Finalize development and distribution tree layouts
 
 	Tweaks for building on Windows with MinGW and packaging in ZIP
 	A Windows port
@@ -80,3 +80,6 @@ Done
 	Added build.txt with building instructions.
 
 	Final tweaks before 0.8b release.
+	Send a snapshot to David Riddoch for comment
+
+	Initial renaming from SJ Test to SLJ Test, logo stil needs work

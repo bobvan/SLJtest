@@ -1,9 +1,9 @@
 /**
- * \file   sjtest.c
- * \brief  System Jitter Test
+ * \file   sljtest.c
+ * \brief  System Latency Jitter Test
  * \author Robert A. Van Valzah - Informatica Corporation
  *
- * System Jitter Test - Measure and visualize system jitter
+ * System Latency Jitter Test - Measure and visualize system latency jitter
  *
  * See accompanying PDF or HTML renderings of doc, or see doc input at end of this file
  *  
@@ -237,7 +237,7 @@ const char *usage = "[-b bins] [-f file] [-h] [-k knee] [-m min] [-o outbuf] [-p
 #endif	/* CPU_AFFINITY */
 
 /*! Note that Makefile parses the following line to extract version number */
-const char *version = "SJ Test 0.8c";
+const char *version = "SLJ Test 0.8c";
 
 /*! Histogram table of timestamp deltas */
 bin_t *histo;
@@ -425,7 +425,7 @@ histo_setup() {
 }
 
 /*!
- * \brief Measure and visualize system jitter.
+ * \brief Measure and visualize system latency jitter.
  * \param argc Count of arguments
  * \param argv Argument vector
  */
@@ -699,14 +699,14 @@ main(int argc, char *argv[]) {
 	return (0);
 }
 /**
-\mainpage System Jitter Test
+\mainpage System Latency Jitter Test
 \tableofcontents
  
 \section impatient For the Impatient
 
-\li Run a pre-compiled binary:<tt> bin/\<Platform\>/sjtest</tt>
-\li On Windows, open a <tt>cmd</tt> window and run <tt>sjtext.exe</tt> in that.
-\li Or build from source and run:<tt> cd src; make; ./sjtest</tt>
+\li Run a pre-compiled binary:<tt> bin/\<Platform\>/sljtest</tt>
+\li On Windows, open a <tt>cmd</tt> window and run <tt>sljtext.exe</tt> in that.
+\li Or build from source and run:<tt> cd src; make; ./sljtest</tt>
 \li The output should be pretty self explanatory.
 \li Put your right ear on your shoulder to see the histogram.
 \li See \ref output "Output Explanation" below for details.
@@ -732,24 +732,24 @@ interrupted all the time.  For humans, consistency in performing a
 repeated task requires freedom from interruptions.
 
 Roughly the same idea applies to computer systems.
-SJ Test measures the ability of a system to provide a CPU core that is
+SLJ Test measures the ability of a system to provide a CPU core that is
 able to consistently execute a repetitive task.
 The emphasis is <em>not</em> on the average time taken to do a task but
 rather on the <em>variance</em> in time between repetitions of the task.
 
-We will define system jitter more thoroughly
+We will define system latency jitter more thoroughly
 \ref sources_categorization "below",
 but for now we can think of it as the jitter measured by an application
 that introduces no jitter of its own.
-System jitter will be present in any application run by the system.
+System latency jitter will be present in any application run by the system.
 It represents the lower bound for jitter that might be expected of
 any application running on the system.
 
-SJ Test measures system jitter and provides a simple but effective
+SLJ Test measures system latency jitter and provides a simple but effective
 visualization of it for analysis.
 
-Running a system jitter benchmark under different conditions can provide
-insight into the causes of system jitter.
+Running a system latency jitter benchmark under different conditions can provide
+insight into the causes of system latency jitter.
 Here are some test ideas:
 
 \li Compare results with other CPU cores idle and with them working
@@ -767,17 +767,17 @@ Here are some test ideas:
 
 \section design Design
 
-The design of SJ Test was motivated by goals, but bounded by constraints.
+The design of SLJ Test was motivated by goals, but bounded by constraints.
 
 \subsection goals Design Goals
 
-Two key design goals drove the development of SJ Test:
+Two key design goals drove the development of SLJ Test:
 
-\li Make measurements to quantify system jitter.
+\li Make measurements to quantify system latency jitter.
 These measurements can be used as benchmarks
 for performance comparisons between systems or to guide tuning efforts.
 \li Provide a visualization of collected data that aids in analysis
-and characterization of system jitter.
+and characterization of system latency jitter.
 The visualization can help drive jitter tuning efforts.
 
 \subsection constraints Design Constraints
@@ -790,19 +790,19 @@ tune, and retest.
 It is sometimes possible to quickly find and remove a source of
 jitter, but more often, repeated
 tuning and testing are required.
-Hence SJ Test was designed
+Hence SLJ Test was designed
 to produce quick results so that the effect of tuning changes could be
 tested quickly.
 
 \li <em>Simplicity</em>
 Benchmarking and tuning opportunities are often fleeting, so it's important
 to get accurate results and actionable information simply.
-SJ Test combines data collection, analysis, and visualization in a
+SLJ Test combines data collection, analysis, and visualization in a
 single tool that is easy to operate.
 
 \li <em>Portability</em>
 It is useful to be able to compare results across a variety of operating systems.
-SJ Test is a small code base that uses few system libraries for good portability.
+SLJ Test is a small code base that uses few system libraries for good portability.
 It requires an x86 processor for access to the RDTSC instruction.
 It comes with pre-compiled binaries for Linux, Solaris, Mac OS X, and FreeBSD.
 
@@ -814,7 +814,7 @@ The range of data values can easily span 6 orders of magnitude, so they
 can be difficult to represent on even a high-resolution display.
 The constraints of simplicity and portability are best met with a
 character interface rather than a graphical one.
-So SJ Test aims to analyze and visualize all the data using easily
+So SLJ Test aims to analyze and visualize all the data using easily
 portable character graphics.
 
 
@@ -946,9 +946,9 @@ a stack of jitter sources by layer as shown below:
 
 Note that jitter measurements from lower layers propagate to higher layers.
 
-\subsection system_jitter Defining System Jitter
+\subsection system_jitter Defining System Latency Jitter
 
-This code aims to measure system jitter
+This code aims to measure system latency jitter
 so that a system can be tuned to minimize it.
 Reducing jitter in
 elapsed time measurements made with the TSC minimizes jitter
@@ -956,16 +956,16 @@ throughout the system.  Reading the TSC value is a very low-level
 operation.  It is independent of higher-level languages and libraries
 like Ultra Messaging.
 
-We define system jitter as the jitter
+We define system latency jitter as the jitter
 measured at the lowest-possible level at which messaging or
 application software can be written.
 Applications are the likely source of any jitter measured in
-excess of the system jitter.
+excess of the system latency jitter.
 
-SJ Test uses no network I/O, no messaging library, no
+SLJ Test uses no network I/O, no messaging library, no
 memory-managed language, or abstraction layers.  It's measuring
 jitter as close to the machine hardware as we know how to get with
-C and in-line assembler.  Said differently, jitter measured by SJ Test
+C and in-line assembler.  Said differently, jitter measured by SLJ Test
 is coming from server hardware, BIOS, CPU, VM, and OS sources.
 
 
@@ -982,33 +982,33 @@ We categorize all such jitter as application jitter.
 
 Adding networking, messaging libraries, memory-managed language
 wrappers, and/or abstraction layers will only magnify the effects
-of system jitter.
+of system latency jitter.
 One microsecond of jitter on each step of a 1000-step task can turn into
 one millisecond of jitter for the whole task.
 
 Note that we use the term "jitter" here in the general sense meaning
-variation from an expected norm.  The system jitter discussed
+variation from an expected norm.  The system latency jitter discussed
 here is just one component of the latency variation observed in
 application-level tests like repeated message round-trip time tests.
 The standard deviation of latency measured in message round-trip
 times is often loosely called "jitter," but we are making a distinction
-here between that and system jitter.
-System jitter is that component that can never be removed from an application
+here between that and system latency jitter.
+System latency jitter is that component that can never be removed from an application
 jitter measurement because it is present in all applications running
 on the system.
 
 \section visualization Jitter Visualization
 
-Even a short system jitter test produces many millions of data points, so
+Even a short system latency jitter test produces many millions of data points, so
 a concise visualization of the data is required to quickly interpret the results.
 Specifically, a good visualization of the data would allow quick and meaningful
 comparisons with other test runs.
 
 A <a href="http://en.wikipedia.org/wiki/Histogram">histogram</a> is the natural
-choice for visualizing system jitter test data.
+choice for visualizing system latency jitter test data.
 Histograms are commonly used in applications like displaying the variance in
 adult height among a population.
-However, inherent differences in system jitter data and display constraints
+However, inherent differences in system latency jitter data and display constraints
 suggest we make some changes from common histograms.
 Specifically, we use non-uniform bin spacing, logarithmic value display, and
 rotated axes.
@@ -1017,7 +1017,7 @@ Details are presented in following sections.
 \subsection data_characteristics Jitter Data Characteristics
 
 Although many natural processes
-follow a normal distribution, the elapsed times measured in system jitter
+follow a normal distribution, the elapsed times measured in system latency jitter
 tests are not expected to follow a normal distribution.
 One reason is that there is a hard lower bound on the time required
 to read the TSC so we shouldn't expect a symmetric or uniform
@@ -1045,7 +1045,7 @@ high-resolution displays.
 
 A graph of the cumulative percentage of all samples always rises from 0 to 100% as
 we move across the histogram bins.
-With system jitter data, we often see the cumulative percentage rise quickly from
+With system latency jitter data, we often see the cumulative percentage rise quickly from
 0 to >90% in just a few bins, but then rise much more slowly after that.
 Thus a graph of the cumulative percentage often shows a <em>knee</em> range where
 the growth per bin slows.
@@ -1105,7 +1105,7 @@ bin. Here is an example for 20 histogram bins with a minimum value of
 
 Default values produce output that is 28 lines by no more than 80 characters.
 This small space contains areas with many statistics and
-a compact visualization of system jitter.
+a compact visualization of system latency jitter.
 
 The following figure gives a quick overview of the 5 output areas while
 following sections give detail on each.
@@ -1166,7 +1166,7 @@ than 80 columns.
 
 After per-bin statistics and histogram lines, there is a section of statistics
 for the overall test run.
-While the histogram is useful for characterizing a system's jitter and tuning, the 
+While the histogram is useful for characterizing a system's latency jitter and tuning, the 
 overall statistics may be more useful for making benchmark comparisons between
 systems.
 In particular, the maximum and standard deviation in units of time are probably
@@ -1182,7 +1182,7 @@ cannot be known until after data collection and often visualization.
 The default minimum and knee values may be good enough for a quick analysis, but
 tuning these values away from the defaults often provides sharper insight.
 
-There are heuristics built into SJ Test that check the minimum and knee values
+There are heuristics built into SLJ Test that check the minimum and knee values
 for reasonability after data collection.
 You'll see this recommendation if
 the minimum data sample is less that 80% of the configured expected minimum.
@@ -1336,7 +1336,7 @@ is over 11 times larger.
 
 \section availability Availability
 
-Informatica makes the binary and source code for SJ Test freely available so that our
+Informatica makes the binary and source code for SLJ Test freely available so that our
 customers can use it to work with their hardware and software
 vendors to reduce jitter.  We pioneered this idea with our
 <a href="https://community.informatica.com/solutions/informatica_mtools">mtools</a>
@@ -1344,7 +1344,7 @@ software for testing multicast UDP performance.  Many customers
 have used mtools to work with their NIC, driver, OS, and server
 vendors to improve UDP multicast performance.  We hope that this
 code can be used between our customers and their other vendors to
-reduce system jitter.
+reduce system latency jitter.
 
 
 \copyright (c) Copyright 2011, 2012 Informatica Corp.
