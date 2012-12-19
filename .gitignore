@@ -2,11 +2,11 @@
 .DS_Store
 doc/latex
 doc/html
-SJtest-*
+SLJtest-*
 *.tgz
 *.zip
-sjtest
-sjtest.o
+sljtest
+sljtest.o
 getopt.o
 version.txt
 Doxyfile.bak

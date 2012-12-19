@@ -82,4 +82,8 @@ Done
 	Final tweaks before 0.8b release.
 	Send a snapshot to David Riddoch for comment
 
-	Initial renaming from SJ Test to SLJ Test, logo stil needs work
+	Initial renaming from SJ Test to SLJ Test, logo still needs work
+
+	Rebuilt logo for new name SLJ Test
+	Caught one remain "sj" in .gitignore
+	Added large-size logo for INFA Marketplace submission
