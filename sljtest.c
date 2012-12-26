@@ -32,13 +32,12 @@
  *  Knee:
  *	The midpoint in the number of histogram bins: 1/2 the bins below
  *	the knee, 1/2 the bins above the knee.
- * 	Bins step linearaly below the knee and exponentially above it.
+ * 	Bins spacing steps linearaly below the knee and exponentially above it.
  *
  * ToDo
  *  Taskset
  *  CPU affiinity
  *  Maybe option to run many threads at once?
- *  Windows port
  *  Better comments on data structures and algoriths
  *  Break up main() so it's not so long
  *
@@ -140,6 +139,8 @@ int getopt(int, char *const *, const char *);
 #define	DEF_PAUSE		0
 /*! DEFault RUN TIME in seconds */
 #define	DEF_RUNTIME		1
+/*! DEFault SUM mode */
+#define	DEF_SUM			0
 /*! DEFault maximum output LINE WIDth */
 #define	DEF_LINEWID		79
 
@@ -176,6 +177,8 @@ typedef struct args_stct {
 	int pause;
 /*! Runtime (seconds) */
 	int runtime;
+/*! Sum deltas falling into each bin (instead of just counting deltas falling into bin) */
+	int sum;
 /*! Output line width (characters) */
 	int linewid;
 } args_t;
@@ -184,8 +187,10 @@ typedef struct args_stct {
 typedef struct bin_stct {
 /*! Upper Bound (inclusive) on histogram bin (ticks) */
 	uint64_t ub;
-/*! Number of samples <= ub */
-	int count;
+/*! Count of deltas <= ub, but not in lower bins */
+	int delta_count;
+/*! Sum of deltas <= ub, but not in lower bins */
+	int delta_sum;
 } bin_t;
 
 /*! Type for outlier buffer entry */
@@ -208,6 +213,7 @@ args_t args = {
 	DEF_OUTBUF,
 	DEF_PAUSE,
 	DEF_RUNTIME,
+	DEF_SUM,
 	DEF_LINEWID,
 };
 
@@ -224,16 +230,17 @@ const struct option OptTable[] = {
 	{"outbuf",  required_argument, NULL, 'o'},
 	{"pause",   required_argument, NULL, 'p'},
 	{"runtime", required_argument, NULL, 'r'},
+	{"sum",           no_argument, NULL, 's'},
 	{"width",   required_argument, NULL, 'w'},
 };
 
 #ifdef	CPU_AFFINITY
-const char *OptString = "b:c:f:hk:m:o:p:r:w:";
-const char *usage = "[-b bins] [-c cpu] [-f file] [-h] [-k knee] [-m min] [-o outbuf] [-p pause] [-r runtime] [-w width]";
+const char *OptString = "b:c:f:hk:m:o:p:r:sw:";
+const char *usage = "[-b bins] [-c cpu] [-f file] [-h] [-k knee] [-m min] [-o outbuf] [-p pause] [-r runtime] [-s] [-w width]";
 
 #else	/* CPU_AFFINITY */
-const char *OptString = "b:f:hk:m:o:p:r:w:";
-const char *usage = "[-b bins] [-f file] [-h] [-k knee] [-m min] [-o outbuf] [-p pause] [-r runtime] [-w width]";
+const char *OptString = "b:f:hk:m:o:p:r:sw:";
+const char *usage = "[-b bins] [-f file] [-h] [-k knee] [-m min] [-o outbuf] [-p pause] [-r runtime] [-s] [-w width]";
 #endif	/* CPU_AFFINITY */
 
 /*! Note that Makefile parses the following line to extract version number */
@@ -363,6 +370,10 @@ args_parse(int argc, char *argv[]) {
 			args.runtime = atoi(optarg);
 			break;
 
+		case 's':
+			args.sum++;
+			break;
+
 		case 'w':
 			args.linewid = atoi(optarg);
 			break;
@@ -407,19 +418,22 @@ histo_setup() {
 	 */
 	for (bp=histo; bp<histo+(args.bins/2); bp++) {
 		bp->ub = args.min+(args.knee-args.min)*(bp-histo+1)/(args.bins/2);
-		bp->count = 0;
+		bp->delta_count = 0;
+		bp->delta_sum   = 0;
 	}
 	/* Fill second half of histogram table with values above knee */
 	/* Advance each bin upper bound by 1/2 an order of magnitude */
 	uint64_t mult = args.knee;
 	for (        ; bp<histo+args.bins; bp++) {
 		bp->ub = mult*2;
-		bp->count = 0;
+		bp->delta_count = 0;
+		bp->delta_sum   = 0;
 		bp++;
 
 		mult *= 10;
 		bp->ub = mult;
-		bp->count = 0;
+		bp->delta_count = 0;
+		bp->delta_sum   = 0;
 	}
 	histo[args.bins-1].ub = UINT64_MAX;	/* Sentinel */
 }
@@ -438,7 +452,9 @@ main(int argc, char *argv[]) {
 	uint64_t deltas[10], *dp;
 	uint64_t min, max;		/* Min and max deltas (ticks) */
 	struct timeval now_gtod;	/* Time now as timeval */
-	const char *pre_graph_hdr = "Time    Ticks    Count        Percent    Cumulative  ";
+	/* The following two headers are assumed to have the same string length */
+	const char *cnt_graph_hdr = "Time    Ticks    Count        Percent    Cumulative  ";
+	const char *sum_graph_hdr = "Time    Ticks    Sum          Percent    Cumulative  ";
 	const char *graph_str = "*******************************************************************";
 	outlier_t *obp;		/* Pointer to next open entry in outlier buffer */
 	int didwrap;		/* True when outlier buffer wrapped around */
@@ -459,13 +475,13 @@ main(int argc, char *argv[]) {
 		    args.knee-args.min, args.min, args.knee, args.bins/2);
 		errflag++;
 	}
-	if (args.linewid < strlen(pre_graph_hdr)+1) {
-		fprintf(stderr, "Minimum line width is %zd\n", strlen(pre_graph_hdr)+1);
+	if (args.linewid < strlen(cnt_graph_hdr)+1) {
+		fprintf(stderr, "Minimum line width is %zd\n", strlen(cnt_graph_hdr)+1);
 		errflag++;
 	}
-	if (args.linewid > strlen(pre_graph_hdr)+strlen(graph_str)) {
+	if (args.linewid > strlen(cnt_graph_hdr)+strlen(graph_str)) {
 		fprintf(stderr, "Maximum line width is %zd\n",
-		strlen(pre_graph_hdr)+strlen(graph_str));
+		strlen(cnt_graph_hdr)+strlen(graph_str));
 		errflag++;
 	}
 
@@ -491,8 +507,8 @@ main(int argc, char *argv[]) {
 	 */
 
 	uint64_t timing_ticks = 0;	/* TSC ticks actually spent in timing measurements */
-	uint64_t delta_count = 0;	/* Count of deltas taken */
-	uint64_t delta_sum = 0;		/* Sum of TSC deltas measured */
+	uint64_t delta_count = 0;	/* Global count of deltas taken */
+	uint64_t delta_sum = 0;		/* Global sum of TSC deltas measured */
 	min   = UINT64_MAX;
 	max   = 0;
 
@@ -562,7 +578,9 @@ main(int argc, char *argv[]) {
 			/* Find bin to count this delta */
 			/* Note: no end test is needed because of infinite sentinel */
 			for (bp=histo; *dp>bp->ub; bp++) {}
-			bp->count++;
+
+			bp->delta_count++;
+			bp->delta_sum += *dp;
 
 			delta_count++;
 			delta_sum += *dp;
@@ -594,27 +612,42 @@ main(int argc, char *argv[]) {
 	double tpns = (stop_tsc-start_tsc)/1000.0/(stop_us-start_us);
 
 	/* Print histogram headers */
-	printf("%sGraph ln(Count-e)\n", pre_graph_hdr);
+	printf("%sGraph ln(Count-e)\n", (args.sum) ? sum_graph_hdr : cnt_graph_hdr);
 
-	/* Find maximum count in any histogram bin for scaling graph */
-	uint64_t max_count = 0;
+	/* Find maximum delta count and sum in any histogram bin for scaling graph */
+	uint64_t max_count=0, max_sum=0;
 	for (bp=histo; bp<histo+args.bins; bp++) {
-		if (bp->count > max_count)
-			max_count = bp->count;
+		if (bp->delta_count > max_count)
+			max_count = bp->delta_count;
+		if (bp->delta_sum   > max_sum  )
+			max_sum   = bp->delta_sum  ;
 	}
-	double graph_scale = (double)(args.linewid-strlen(pre_graph_hdr))/log(((double)max_count)-M_E);
+
+	/* Find a graph scaling value so that the maximum bin is full line width */
+	double graph_scale;
+	if (args.sum) {
+		graph_scale = (double)(args.linewid-strlen(cnt_graph_hdr))/log(((double)max_sum  )-M_E);
+	} else {
+		graph_scale = (double)(args.linewid-strlen(cnt_graph_hdr))/log(((double)max_count)-M_E);
+	}
 
 	/* Print histogram */
-	uint64_t c_count = 0;	/* Cumulative count as we step through bins */
-	uint64_t mid_count = 0;	/* Cumulative count at histogram midpoint */
+	uint64_t c_count = 0;	/* Cumulative delta count as we step through bins */
+	uint64_t mid_count = 0;	/* Cumulative delta count at histogram midpoint */
+	uint64_t c_sum = 0;	/* Cumulative delta sum   as we step through bins */
+	uint64_t mid_sum = 0;	/* Cumulative delta sum   at histogram midpoint */
 	for (bp=histo; bp<histo+args.bins; bp++) {
 		/*
 		 * If at midpoint in histogram, record c_count for
 		 * knee tuning advice later.
 		 */
-		if (bp == histo+(args.bins/2))
+		if (bp == histo+(args.bins/2)) {
 			mid_count = c_count;
-		c_count += bp->count;
+			mid_sum = c_sum;
+		}
+
+		c_count += bp->delta_count;
+		c_sum   += bp->delta_sum;
 
 		/* Format bin upper bound nicely into ub_str */
 		char *ub_str, ubbuf[99];
@@ -625,22 +658,38 @@ main(int argc, char *argv[]) {
 			ub_str = ubbuf;
 		}
 
-		/* Compute a logrithmic function on bin count that looks good */
-		int countlog = graph_scale*log(((double)bp->count)-M_E);
-		if (countlog < 0)
-			countlog = 0;
 		/*
-		 * Any nonzero count deserves a star, even though floating
+		 * Compute a logrithmic function on bin delta count or sum
+		 * that looks good.
+		 */
+		int graphwid;
+		if (args.sum) {
+			graphwid = graph_scale*log(((double)bp->delta_sum  )-M_E);
+		} else {
+			graphwid = graph_scale*log(((double)bp->delta_count)-M_E);
+		}
+
+		if (graphwid < 0)
+			graphwid = 0;
+		/*
+		 * Any nonzero delta count deserves a star, even though floating
 		 * point sometimes rounds down to zero stars.
 		 */
-		if (countlog==0 && bp->count!=0)
-			countlog = 1;
+		if (graphwid==0 && bp->delta_count!=0)
+			graphwid = 1;
 
 		/* Print a row for each bin */
-		printf("%s  %s %-12d %7.4f%%  %8.4f%%    %*.*s\n",
-		    t2ts(bp->ub, tpns), ub_str, bp->count,
-		    100.0*bp->count/delta_count, 100.0*c_count/delta_count,
-		    countlog, countlog, graph_str);
+		if (args.sum) {
+			printf("%s  %s %-12d %7.4f%%  %8.4f%%    %*.*s\n",
+			    t2ts(bp->ub, tpns), ub_str, bp->delta_sum,
+			    100.0*bp->delta_sum/delta_sum, 100.0*c_sum/delta_sum,
+			    graphwid, graphwid, graph_str);
+		} else {
+			printf("%s  %s %-12d %7.4f%%  %8.4f%%    %*.*s\n",
+			    t2ts(bp->ub, tpns), ub_str, bp->delta_count,
+			    100.0*bp->delta_count/delta_count, 100.0*c_count/delta_count,
+			    graphwid, graphwid, graph_str);
+		}
 
 		/* Separate lower 1/2 of histogram from upper 1/2 */
 		if (bp-histo+1 == args.bins/2)

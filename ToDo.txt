@@ -87,3 +87,7 @@ Done
 	Rebuilt logo for new name SLJ Test
 	Caught one remain "sj" in .gitignore
 	Added large-size logo for INFA Marketplace submission
+
+	First version that can sum deltas into bins.
+	Unified global and structure member naming
+	Clarified some comments
