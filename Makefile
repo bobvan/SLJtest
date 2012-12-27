@@ -5,7 +5,7 @@
 # Also see build.sh for platform-specific options.
 #
 
-# Any rule referncing these variable shoud depend on version.txt
+# Any rule referncing these variables shoud depend on version.txt
 VERS=`cat version.txt`
 DISTDIR=SLJtest-${VERS}
 

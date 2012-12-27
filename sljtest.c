@@ -244,7 +244,7 @@ const char *usage = "[-b bins] [-f file] [-h] [-k knee] [-m min] [-o outbuf] [-p
 #endif	/* CPU_AFFINITY */
 
 /*! Note that Makefile parses the following line to extract version number */
-const char *version = "SLJ Test 0.8c";
+const char *version = "SLJ Test 1.0";
 
 /*! Histogram table of timestamp deltas */
 bin_t *histo;
@@ -763,10 +763,6 @@ main(int argc, char *argv[]) {
 \li See \ref examples "Example Output" below for example output and analysis.
 \li Browse code by <a href="globals.html"><b>functions, variables, defines, enums, and typedefs</b></a>.
 
-\warning This is a beta release. The code and doc will improve with time,
-but should be useful even now thanks to alpha testers.
-Please send all comments to BVan@Informatica.Com.
-
 \section introduction Introduction
 
 Ultra Messaging customers use our software to build complicated
@@ -853,7 +849,7 @@ single tool that is easy to operate.
 It is useful to be able to compare results across a variety of operating systems.
 SLJ Test is a small code base that uses few system libraries for good portability.
 It requires an x86 processor for access to the RDTSC instruction.
-It comes with pre-compiled binaries for Linux, Solaris, Mac OS X, FreeBSD,
+It comes with pre-compiled binaries for Linux, Solaris, Mac OS, FreeBSD,
 and Windows.
 
 \li <em>Information Density</em>
@@ -1204,7 +1200,8 @@ Column     | Contents
 :--------- | :-------
 Time       | The upper bound of this bin in terms of elapsed time between adjacent reads of the TSC.
 Ticks      | The same as above, but in ticks of the TSC.
-Count      | A count of the number of samples in this bin.
+Count      | A count of the number of deltas falling into this bin (only seen without \c -s flag).
+Sum	   | The sum of deltas falling into this bin (only seen with \c -s flag).
 Percent    | The percentage of all samples in this bin.
 Cumulative | The cumulative percentage of all samples in this bin and lower.
 Graph      | A graph of the Count column.
@@ -1213,6 +1210,13 @@ If you want to see more detail in the histogram and have a window with
 many rows, try increasing the number of bins.
 Or try increasing the output line width if you have a window with more
 than 80 columns.
+
+By default, the per-bin statistics and histogram <em>count</em> the deltas
+that fall into each histogram bin.
+This weights large and small deltas equally, which can be undesirable
+if trying to measure the total system latency jitter.
+The \c -s flag can be added to the command line to instead report the
+<em>sum</em> of the deltas that fall into each histogram bin.
 
 After per-bin statistics and histogram lines, there is a section of statistics
 for the overall test run.
@@ -1298,6 +1302,7 @@ is probably big enough for you to spot any periodic patterns.
  -o outbuf	Size of outlier buffer in outliers (10000)
  -p pause	Pause msecs just before starting jitter test loop (0)
  -r runtime	Run jitter testing loops until seconds pass (1)
+ -s		Sum deltas falling into each bin (instead of just counting deltas falling into bin)
  -w width	Output line Width in characters (80)
 \endverbatim
 
@@ -1386,7 +1391,9 @@ is over 11 times larger.
 
 \section availability Availability
 
-Informatica makes the binary and source code for SLJ Test freely available so that our
+Informatica makes the binary and
+<a href="https://github.com/bobvan/SLJtest">source code for SLJ Test</a>
+freely available so that our
 customers can use it to work with their hardware and software
 vendors to reduce jitter.  We pioneered this idea with our
 <a href="https://community.informatica.com/solutions/informatica_mtools">mtools</a>

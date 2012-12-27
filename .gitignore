@@ -5,6 +5,7 @@ doc/html
 SLJtest-*
 *.tgz
 *.zip
+*.doc
 sljtest
 sljtest.o
 getopt.o
