@@ -853,7 +853,8 @@ single tool that is easy to operate.
 It is useful to be able to compare results across a variety of operating systems.
 SLJ Test is a small code base that uses few system libraries for good portability.
 It requires an x86 processor for access to the RDTSC instruction.
-It comes with pre-compiled binaries for Linux, Solaris, Mac OS X, and FreeBSD.
+It comes with pre-compiled binaries for Linux, Solaris, Mac OS X, FreeBSD,
+and Windows.
 
 \li <em>Information Density</em>
 Even a 1-second test run produces tens of millions of data points.
