@@ -45,8 +45,10 @@
  * (c) Copyright 2011, 2012 Informatica Corp.
  * Robert A. Van Valzah, October 2011, February 2012, October 2012
  *
- * Acknowledgement
+ * Acknowledgements
  *  Inspired by David Riddoch of Solarflare
+ *  Idea for \c -s flag to sum deltas into histogram bins instead of
+ *  just counting them from Erez Strauss
  *
  * License
  * Redistribution and use in source and binary forms, with or without
@@ -713,17 +715,30 @@ main(int argc, char *argv[]) {
 	    t2ts(min, tpns), t2ts(delta_sum/delta_count, tpns),
 	    t2ts((uint64_t)std_dev, tpns), t2ts(max, tpns));
 
-	/* Analyze histogram to give advice on setting better min and knee */
+	/* Analyze histogram to give advice on setting better min */
 	if (min<args.min || args.min<0.80*min) {
 		printf("Recommend min setting of %3.0f ticks\n", 0.80*min);
 	}
-	if (outbuf==NULL && 100.0*mid_count/delta_count<90.0) {
-		printf("Recommend increasing knee setting from %" PRIu64 " ticks\n",
-		    args.knee);
-	}
-	if (outbuf==NULL && 100.0*mid_count/delta_count>99.0) {
-		printf("Recommend decreasing knee setting from %" PRIu64 " ticks\n",
-		    args.knee);
+
+	/* Analyze histogram to give advice on setting better knee */
+	if (args.sum) {
+		if (outbuf==NULL && 100.0*mid_sum/delta_sum<90.0) {
+			printf("Recommend increasing knee setting from %" PRIu64 " ticks\n",
+			    args.knee);
+		}
+		if (outbuf==NULL && 100.0*mid_sum/delta_sum>99.0) {
+			printf("Recommend decreasing knee setting from %" PRIu64 " ticks\n",
+			    args.knee);
+		}
+	} else {
+		if (outbuf==NULL && 100.0*mid_count/delta_count<90.0) {
+			printf("Recommend increasing knee setting from %" PRIu64 " ticks\n",
+			    args.knee);
+		}
+		if (outbuf==NULL && 100.0*mid_count/delta_count>99.0) {
+			printf("Recommend decreasing knee setting from %" PRIu64 " ticks\n",
+			    args.knee);
+		}
 	}
 
 	/* Dump log of outliers to outfile */
@@ -1403,15 +1418,24 @@ vendors to improve UDP multicast performance.  We hope that this
 code can be used between our customers and their other vendors to
 reduce system latency jitter.
 
+\section related Related Work
+
+Gil Tene of Azul Systems has written
+<a href="http://www.azulsystems.com/jHiccup">jHiccup</a>,
+a tool for measuring latency jitter in Java JVM runtime systems.
+
 
 \copyright (c) Copyright 2011, 2012 Informatica Corp.
 
 \author Robert A. Van Valzah
 
 
-\section acknowledgement Acknowledgement
+\section acknowledgements Acknowledgements
 
 Inspired by David Riddoch of Solarflare
+
+Idea for \c -s flag to sum deltas into histogram bins instead of
+just counting them from Erez Strauss
 
 
 \section license License
