@@ -45,8 +45,10 @@
  * (c) Copyright 2011, 2012 Informatica Corp.
  * Robert A. Van Valzah, October 2011, February 2012, October 2012
  *
- * Acknowledgement
+ * Acknowledgements
  *  Inspired by David Riddoch of Solarflare
+ *  Idea for \c -s flag to sum deltas into histogram bins instead of
+ *  just counting them from Erez Strauss
  *
  * License
  * Redistribution and use in source and binary forms, with or without
@@ -1403,15 +1405,24 @@ vendors to improve UDP multicast performance.  We hope that this
 code can be used between our customers and their other vendors to
 reduce system latency jitter.
 
+\section related Related Work
+
+Gil Tene of Azul Systems has written
+<a href="http://www.azulsystems.com/jHiccup">jHiccup</a>,
+a tool for measuring latency jitter in Java JVM runtime systems.
+
 
 \copyright (c) Copyright 2011, 2012 Informatica Corp.
 
 \author Robert A. Van Valzah
 
 
-\section acknowledgement Acknowledgement
+\section acknowledgements Acknowledgements
 
 Inspired by David Riddoch of Solarflare
+
+Idea for \c -s flag to sum deltas into histogram bins instead of
+just counting them from Erez Strauss
 
 
 \section license License
