@@ -51,7 +51,7 @@ build: version.txt
 	ssh Ra        'cd                      src/SLJtest; ./build.sh ${DISTDIR}'
 	ssh Raze      'cd                      src/SLJtest; ./build.sh ${DISTDIR}'
 	ssh Wormwood  'cd /29W/Day/d0/home/bob/src/SLJtest; ./build.sh ${DISTDIR}'
-	mkdir ${DISTDIR}bin/Windows # Placeholder for sljtest.exe to be copied in
+	mkdir ${DISTDIR}/bin/Windows # Placeholder for sljtest.exe to be copied in
 #	ssh localhost 'cd                      src/SLJtest; ./build.sh ${DISTDIR}'
 
 # Documentation
