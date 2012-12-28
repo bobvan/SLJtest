@@ -17,12 +17,15 @@ Build Procedure
 		Open doc/hmtl/index.html in browser
 		Print to sljtest.pdf
 		Copy doc to Unix build machine
+		Copy doc to gh-pages branch
+			cp -r doc/html ../SLJpages/
 	Unix build machine
 		make build
 		Type passwords as needed
 	Windows build machine
-		cd c:\MinGW\msys\1.0\home\bvvalzah\src\SLJtest
-		make sljtest.exe
+		In MinGW Shell
+			cd c:\MinGW\msys\1.0\home\bvvalzah\src\SLJtest
+			make sljtest.exe
 		Copy binary back to Unix build machine if needed
 	Unix build machine
 		make package
