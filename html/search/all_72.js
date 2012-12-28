@@ -1,6 +1,7 @@
 var searchData=
 [
   ['rdtsc',['rdtsc',['../sljtest_8c.html#a8af02d9cb05d7262a77689bf809384f7',1,'sljtest.c']]],
+  ['readme_2emd',['README.md',['../_r_e_a_d_m_e_8md.html',1,'']]],
   ['replgetopt_2eh',['replgetopt.h',['../replgetopt_8h.html',1,'']]],
   ['require_5forder',['REQUIRE_ORDER',['../getopt_8c.html#a4e3260c15175d00f67f88787b139b07ba0e73a0691c110b1442d8364d1d12eccc',1,'getopt.c']]],
   ['required_5fargument',['required_argument',['../replgetopt_8h.html#a6ece8d8dfa8378778f7290fdaba5b8bc',1,'replgetopt.h']]],

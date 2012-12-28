@@ -8,5 +8,6 @@ var searchData=
   ['def_5foutbuf',['DEF_OUTBUF',['../sljtest_8c.html#ac570cf916402c3a4e311c720f7df8439',1,'sljtest.c']]],
   ['def_5foutfile',['DEF_OUTFILE',['../sljtest_8c.html#a216ef770565425deeeb05f2d77b7fac5',1,'sljtest.c']]],
   ['def_5fpause',['DEF_PAUSE',['../sljtest_8c.html#a88dd0a77672b6e1f9ca101d85a419abb',1,'sljtest.c']]],
-  ['def_5fruntime',['DEF_RUNTIME',['../sljtest_8c.html#abca75ac7f4772d333d0da1418a904ba6',1,'sljtest.c']]]
+  ['def_5fruntime',['DEF_RUNTIME',['../sljtest_8c.html#abca75ac7f4772d333d0da1418a904ba6',1,'sljtest.c']]],
+  ['def_5fsum',['DEF_SUM',['../sljtest_8c.html#a318b81c2076dd491a1a81ba063558aea',1,'sljtest.c']]]
 ];

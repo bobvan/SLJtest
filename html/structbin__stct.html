@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="sljt-logo.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">SLJ Test
-   &#160;<span id="projectnumber">0.8c</span>
+   &#160;<span id="projectnumber">1.0</span>
    </div>
    <div id="projectbrief">System Latency Jitter Test</div>
   </td>
@@ -39,6 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -94,26 +95,43 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 Public Attributes</h2></td></tr>
 <tr class="memitem:aad1a49878e65c97234eff2285f5de808"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbin__stct.html#aad1a49878e65c97234eff2285f5de808">ub</a></td></tr>
 <tr class="separator:aad1a49878e65c97234eff2285f5de808"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:accaae1a4be25709b3c834d0b80fed8eb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbin__stct.html#accaae1a4be25709b3c834d0b80fed8eb">count</a></td></tr>
-<tr class="separator:accaae1a4be25709b3c834d0b80fed8eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7b1f841220b11e49c419f851a369f48"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbin__stct.html#ab7b1f841220b11e49c419f851a369f48">delta_count</a></td></tr>
+<tr class="separator:ab7b1f841220b11e49c419f851a369f48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a221b0026c58fc22031e3b97e132a2f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbin__stct.html#a4a221b0026c58fc22031e3b97e132a2f">delta_sum</a></td></tr>
+<tr class="separator:a4a221b0026c58fc22031e3b97e132a2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Type for histogram table </p>
 
-<p>Definition at line <a class="el" href="sljtest_8c_source.html#l00184">184</a> of file <a class="el" href="sljtest_8c_source.html">sljtest.c</a>.</p>
+<p>Definition at line <a class="el" href="sljtest_8c_source.html#l00187">187</a> of file <a class="el" href="sljtest_8c_source.html">sljtest.c</a>.</p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="accaae1a4be25709b3c834d0b80fed8eb"></a>
+<a class="anchor" id="ab7b1f841220b11e49c419f851a369f48"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int bin_stct::count</td>
+          <td class="memname">int bin_stct::delta_count</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Number of samples &lt;= ub </p>
+<p>Count of deltas &lt;= ub, but not in lower bins </p>
 
-<p>Definition at line <a class="el" href="sljtest_8c_source.html#l00188">188</a> of file <a class="el" href="sljtest_8c_source.html">sljtest.c</a>.</p>
+<p>Definition at line <a class="el" href="sljtest_8c_source.html#l00191">191</a> of file <a class="el" href="sljtest_8c_source.html">sljtest.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4a221b0026c58fc22031e3b97e132a2f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int bin_stct::delta_sum</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sum of deltas &lt;= ub, but not in lower bins </p>
+
+<p>Definition at line <a class="el" href="sljtest_8c_source.html#l00193">193</a> of file <a class="el" href="sljtest_8c_source.html">sljtest.c</a>.</p>
 
 </div>
 </div>
@@ -128,7 +146,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Upper Bound (inclusive) on histogram bin (ticks) </p>
 
-<p>Definition at line <a class="el" href="sljtest_8c_source.html#l00186">186</a> of file <a class="el" href="sljtest_8c_source.html">sljtest.c</a>.</p>
+<p>Definition at line <a class="el" href="sljtest_8c_source.html#l00189">189</a> of file <a class="el" href="sljtest_8c_source.html">sljtest.c</a>.</p>
 
 </div>
 </div>
@@ -138,7 +156,7 @@ Public Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Dec 19 2012 17:05:43 for SLJ Test by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Dec 27 2012 17:53:32 for SLJ Test by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

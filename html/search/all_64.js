@@ -9,5 +9,8 @@ var searchData=
   ['def_5foutfile',['DEF_OUTFILE',['../sljtest_8c.html#a216ef770565425deeeb05f2d77b7fac5',1,'sljtest.c']]],
   ['def_5fpause',['DEF_PAUSE',['../sljtest_8c.html#a88dd0a77672b6e1f9ca101d85a419abb',1,'sljtest.c']]],
   ['def_5fruntime',['DEF_RUNTIME',['../sljtest_8c.html#abca75ac7f4772d333d0da1418a904ba6',1,'sljtest.c']]],
-  ['delta',['delta',['../structoutlier__stct.html#aec7a40342d9cf350a0d2cc32d88f19e9',1,'outlier_stct']]]
+  ['def_5fsum',['DEF_SUM',['../sljtest_8c.html#a318b81c2076dd491a1a81ba063558aea',1,'sljtest.c']]],
+  ['delta',['delta',['../structoutlier__stct.html#aec7a40342d9cf350a0d2cc32d88f19e9',1,'outlier_stct']]],
+  ['delta_5fcount',['delta_count',['../structbin__stct.html#ab7b1f841220b11e49c419f851a369f48',1,'bin_stct']]],
+  ['delta_5fsum',['delta_sum',['../structbin__stct.html#a4a221b0026c58fc22031e3b97e132a2f',1,'bin_stct']]]
 ];
