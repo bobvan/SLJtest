@@ -527,8 +527,8 @@ main(int argc, char *argv[]) {
 
 	rdtsc(start_tsc);
 	gettimeofday(&now_gtod, NULL);
-	start_us = now_gtod.tv_sec * 1000000 + now_gtod.tv_usec;
-	stop_us = start_us + 1000000*args.runtime;
+	start_us = now_gtod.tv_sec * 1000000UL + now_gtod.tv_usec;
+	stop_us = start_us + 1000000UL*args.runtime;
 
 	do {
 		dp = deltas;
@@ -606,7 +606,7 @@ main(int argc, char *argv[]) {
 		}
 		rdtsc(stop_tsc);
 		gettimeofday(&now_gtod, NULL);
-		now_us = now_gtod.tv_sec * 1000000 + now_gtod.tv_usec;
+		now_us = now_gtod.tv_sec * 1000000UL + now_gtod.tv_usec;
 
 	} while (now_us < stop_us);
 
