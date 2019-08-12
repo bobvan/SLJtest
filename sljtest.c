@@ -82,6 +82,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <math.h>
+#include <assert.h>
 #include <sys/time.h>
 
 #ifdef _WIN32
@@ -162,7 +163,7 @@ int getopt(int, char *const *, const char *);
 /*! Command line argument values */
 typedef struct args_stct {
 /*! Number of bins in histogram */
-	int bins;
+	uint64_t bins;
 #ifdef	CPU_AFFINITY
 /*! CPU affinity */
 	char *cpu;
@@ -182,7 +183,7 @@ typedef struct args_stct {
 /*! Sum deltas falling into each bin (instead of just counting deltas falling into bin) */
 	int sum;
 /*! Output line width (characters) */
-	int linewid;
+	size_t linewid;
 } args_t;
 
 /*! Type for histogram table */
@@ -190,9 +191,9 @@ typedef struct bin_stct {
 /*! Upper Bound (inclusive) on histogram bin (ticks) */
 	uint64_t ub;
 /*! Count of deltas <= ub, but not in lower bins */
-	int delta_count;
+	uint64_t delta_count;
 /*! Sum of deltas <= ub, but not in lower bins */
-	int delta_sum;
+	uint64_t delta_sum;
 } bin_t;
 
 /*! Type for outlier buffer entry */
@@ -473,7 +474,7 @@ main(int argc, char *argv[]) {
 	if (args.knee-args.min < args.bins/2) {
 		fprintf(stderr, "Too few (%" PRIu64
 		    ") discrete values between min (%" PRIu64
-		    ") and knee (%" PRIu64 ") for linear histogram bins (%d)\n",
+		    ") and knee (%" PRIu64 ") for linear histogram bins (%" PRIu64 ")\n",
 		    args.knee-args.min, args.min, args.knee, args.bins/2);
 		errflag++;
 	}
@@ -682,19 +683,20 @@ main(int argc, char *argv[]) {
 
 		/* Print a row for each bin */
 		if (args.sum) {
-			printf("%s  %s %-12d %7.4f%%  %8.4f%%    %*.*s\n",
+			printf("%s  %s %-12" PRIu64 " %7.4f%%  %8.4f%%    %*.*s\n",
 			    t2ts(bp->ub, tpns), ub_str, bp->delta_sum,
 			    100.0*bp->delta_sum/delta_sum, 100.0*c_sum/delta_sum,
 			    graphwid, graphwid, graph_str);
 		} else {
-			printf("%s  %s %-12d %7.4f%%  %8.4f%%    %*.*s\n",
+			printf("%s  %s %-12" PRIu64 " %7.4f%%  %8.4f%%    %*.*s\n",
 			    t2ts(bp->ub, tpns), ub_str, bp->delta_count,
 			    100.0*bp->delta_count/delta_count, 100.0*c_count/delta_count,
 			    graphwid, graphwid, graph_str);
 		}
 
 		/* Separate lower 1/2 of histogram from upper 1/2 */
-		if (bp-histo+1 == args.bins/2)
+		assert(bp-histo+1 > 0);
+		if ((unsigned)(bp-histo+1) == args.bins/2)
 			printf("\n");
 	}
 

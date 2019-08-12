@@ -9,7 +9,7 @@
 VERS=`cat version.txt`
 DISTDIR=SLJtest-${VERS}
 
-CFLAGS=-g -Wall
+CFLAGS=-g -Wall -Wextra
 SRCS=	sljtest.c getopt.c replgetopt.h
 	
 BINDIRS=Linux-glibc:2.3-x86_64 Linux-glibc:2.5-x86_64 \
